@@ -49,10 +49,42 @@ function createPostElement(issue) {
         <div class="post-content">
             ${content}
         </div>
-        <a href="${issue.html_url}" target="_blank" class="view-discussion">查看讨论</a>
+        <button class="btn view-discussion" onclick="showComments('${issue.number}')">查看讨论</button>
+        <div id="comments-${issue.number}" class="comments" style="display: none;"></div>
     `;
     
     return post;
+}
+
+async function showComments(issueNumber) {
+    const commentsContainer = document.getElementById(`comments-${issueNumber}`);
+    
+    if (commentsContainer.style.display === 'block') {
+        commentsContainer.style.display = 'none';
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${GITHUB_API}/${issueNumber}/comments`);
+        const comments = await response.json();
+        
+        commentsContainer.innerHTML = ''; // 清空之前的评论
+        
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `
+                <strong>${comment.user.login}</strong>:
+                <p>${comment.body}</p>
+            `;
+            commentsContainer.appendChild(commentElement);
+        });
+        
+        commentsContainer.style.display = 'block'; // 显示评论
+    } catch (error) {
+        console.error('获取评论失败:', error);
+        commentsContainer.innerHTML = '<div class="error">加载评论失败，请稍后重试</div>';
+    }
 }
 
 // 添加自动刷新功能
