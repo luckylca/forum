@@ -18,6 +18,10 @@ async function fetchPosts() {
             const postElement = createPostElement(issue);
             postsContainer.appendChild(postElement);
         });
+        
+        // 添加动画效果
+        const elems = document.querySelectorAll('.post');
+        M.Tooltip.init(elems);
     } catch (error) {
         console.error('获取帖子失败:', error);
         document.getElementById('posts-container').innerHTML = 
