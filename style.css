@@ -56,4 +56,34 @@ header {
 .loading {
     text-align: center;
     padding: 20px;
+}
+
+.error {
+    background-color: #ffebe9;
+    border: 1px solid #ff8182;
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+    color: #cf222e;
+}
+
+.view-discussion {
+    display: inline-block;
+    margin-top: 15px;
+    color: #0969da;
+    text-decoration: none;
+}
+
+.view-discussion:hover {
+    text-decoration: underline;
+}
+
+.post-content {
+    margin: 15px 0;
+    line-height: 1.6;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
 } 
